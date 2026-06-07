@@ -11,150 +11,720 @@
             --primary: #ff6b6b;
             --primary-hover: #e55a5a;
             --secondary: #ffa94d;
-            --accent: #ffd43b;
             --text: #2d3436;
             --text-light: #636e72;
             --border: #f1e6dc;
             --tag-bg: #fff3e0;
             --tag-text: #e67e22;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.10);
             --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.14);
             --radius: 20px;
-            --radius-sm: 12px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        }* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+body {
+    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 20% 15%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 75%, rgba(255, 169, 77, 0.06) 0%, transparent 50%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: var(--bg);
-            background-image:
-                radial-gradient(ellipse at 20% 15%, rgba(255, 107, 107, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 75%, rgba(255, 169, 77, 0.07) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(255, 212, 59, 0.04) 0%, transparent 60%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+.app-container {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
 
-        /* ========== 主容器 ========== */
-        .app-container {
-            width: 100%;
-            max-width: 460px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-        }
+.app-header {
+    text-align: center;
+}
+.app-logo {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 4px;
+    animation: logoBounce 2s ease-in-out infinite;
+}
+.app-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}
+.app-title .highlight {
+    background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.app-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 2px;
+}
 
-        /* ========== 头部 ========== */
-        .app-header {
-            text-align: center;
-            animation: fadeInDown 0.6s ease-out;
-        }
-        .app-logo {
-            font-size: 52px;
-            display: block;
-            margin-bottom: 6px;
-            animation: bounce 2s ease-in-out infinite;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        }
-        .app-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text);
-            letter-spacing: -0.5px;
-            line-height: 1.3;
-        }
-        .app-subtitle {
+.topic-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 34px 26px 30px;
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--border);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+.topic-card.rolling {
+    border-color: #ffe0c0;
+    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(255, 169, 77, 0.10);
+    animation: cardPulse 0.5s ease-in-out;
+}
+.topic-card.result {
+    border-color: #ffd4a8;
+    box-shadow: var(--shadow-lg), 0 0 0 6px rgba(255, 107, 107, 0.07);
+    animation: cardReveal 0.5s ease-out;
+}.topic-emoji {
+    font-size: 42px;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+.topic-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+    word-break: break-word;
+}
+.topic-placeholder {
+    color: #c0b8b0;
+    font-size: 16px;
+    font-weight: 500;
+}
+.topic-category-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease 0.1s;
+}
+.topic-category-tag.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+.btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 50px;
+    padding: 14px 28px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e6b 100%);
+    color: #fff;
+    box-shadow: 0 6px 24px rgba(255, 107, 107, 0.35);
+    font-size: 18px;
+    padding: 15px 34px;
+    min-width: 170px;
+    justify-content: center;
+}
+.btn-primary:active {
+    transform: scale(0.96);
+    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.35);
+}
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+.btn-secondary {
+    background: #fff;
+    color: var(--text);
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 10px 18px;
+    font-size: 14px;
+}
+.btn-secondary:active {
+    transform: scale(0.95);
+    background: #faf7f4;
+}
+
+.category-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.filter-chip {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+.filter-chip.active {
+    background: #fff5f0;
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.10);
+}
+
+.history-section {
+    width: 100%;
+}
+.history-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+.history-item {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 25px;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.history-item:active {
+    border-color: #d0c5b8;
+    background: #fdfaf7;
+}
+.no-history {
+    color: #c8c0b8;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    padding: 6px 0;
+}.toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: #2d3436;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
             font-size: 14px;
-            color: var(--text-light);
-            font-weight: 400;
-            margin-top: 2px;
-        }
-        .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ========== 话题卡片 ========== */
-        .topic-card-wrapper {
-            width: 100%;
-            position: relative;
-            animation: fadeInUp 0.6s ease-out 0.1s both;
-        }
-
-        .topic-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 36px 28px 32px;
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border: 2px solid var(--border);
-            position: relative;
-            overflow: hidden;
-            transition: all var(--transition);
-            cursor: default;
-        }
-
-        .topic-card.rolling {
-            border-color: #ffe0c0;
-            box-shadow: var(--shadow-lg), 0 0 0 4px rgba(255, 169, 77, 0.12);
-            animation: cardPulse 0.5s ease-in-out;
-        }
-
-        .topic-card.result {
-            border-color: #ffd4a8;
-            box-shadow: var(--shadow-lg), 0 0 0 6px rgba(255, 107, 107, 0.08);
-            animation: cardReveal 0.5s ease-out;
-        }
-
-        .topic-emoji-badge {
-            font-size: 40px;
-            margin-bottom: 12px;
-            transition: transform 0.3s ease;
-            display: block;
-            line-height: 1;
-        }
-
-        .topic-text {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
-            line-height: 1.5;
+            font-weight: 600;
+            z-index: 1000;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             letter-spacing: 0.3px;
-            transition: all 0.15s ease;
-            word-break: break-word;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
         }
 
-        .topic-placeholder {
-            color: #c0b8b0;
-            font-size: 16px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
         }
-        .topic-placeholder .dot-pulse {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: particleFly 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .app-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #c8c0b8;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+            50% { transform: translateY(0); }
+            70% { transform: translateY(-5px); }
+        }
+        @keyframes cardPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        @keyframes cardReveal {
+            0% { transform: scale(0.96); opacity: 0.7; }
+            60% { transform: scale(1.03); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes particleFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+        }
+
+        @media (max-width: 480px) {
+            .app-container { gap: 16px; }
+            .app-logo { font-size: 38px; }
+            .app-title { font-size: 22px; }
+            .topic-card { padding: 24px 18px 20px; min-height: 130px; border-radius: 16px; }
+            .topic-emoji { font-size: 34px; }
+            .topic-text { font-size: 18px; }
+            .btn-primary { font-size: 16px; padding: 13px 26px; min-width: 140px; }
+            .filter-chip { font-size: 12px; padding: 5px 10px; }
+            .history-item { font-size: 12px; padding: 5px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast"></div>
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <span class="app-logo">🎰</span>
+            <h1 class="app-title">话题<span class="highlight">盲盒</span></h1>
+            <p class="app-subtitle">和朋友聊天，不知道聊什么？抽一个！</p>
+        </header>
+
+        <div class="topic-card" id="topicCard">
+            <span class="topic-emoji" id="topicEmoji">💬</span>
+            <span class="topic-text" id="topicText">
+                <span class="topic-placeholder">点下方按钮，抽一个话题</span>
+            </span>
+            <span class="topic-category-tag" id="topicTag"></span>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="btnDraw">🎯 抽取话题</button>
+            <button class="btn btn-secondary" id="btnCopy" style="display:none;">📋 复制话题</button>
+        </div>
+
+        <div class="category-filters" id="categoryFilters">
+            <button class="filter-chip active" data-category="all">🎲 全部</button>
+            <button class="filter-chip" data-category="轻松日常">😄 轻松日常</button>
+            <button class="filter-chip" data-category="脑洞大开">💡 脑洞大开</button>
+            <button class="filter-chip" data-category="深度走心">❤️ 深度走心</button>
+            <button class="filter-chip" data-category="趣味二选一">⚖️ 趣味二选一</button>
+            <button class="filter-chip" data-category="回忆往事">📸 回忆往事</button>
+        </div>
+
+        <div class="history-section">
+            <p class="history-title">📝 最近抽到的话题</p>
+            <div class="history-list" id="historyList">
+                <span class="no-history">还没有抽过话题哦~</span>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            今日已抽取 <strong id="drawCount">0</strong> 次 &nbsp;|&nbsp; 话题库共 <strong id="totalTopics">0</strong> 条
+        </footer>
+    </div>
+    <script>
+        (function() {
+            const topics = [
+                { text: '你最近单曲循环的一首歌是什么？', category: '轻松日常', emoji: '🎵' },
+                { text: '如果明天突然多出8小时空闲，你会怎么过？', category: '轻松日常', emoji: '⏰' },
+                { text: '你吃过最奇怪但意外好吃的东西是什么？', category: '轻松日常', emoji: '🍔' },
+                { text: '最近有没有看到特别好看的剧或电影？', category: '轻松日常', emoji: '🎬' },
+                { text: '你手机里最常用的三个App是什么？', category: '轻松日常', emoji: '📱' },
+                { text: '说一件今天让你开心的小事吧', category: '轻松日常', emoji: '😊' },
+                { text: '你小时候最喜欢的动画片是什么？', category: '轻松日常', emoji: '📺' },
+                { text: '如果你可以瞬间学会一项技能，会选什么？', category: '轻松日常', emoji: '🎯' },
+                { text: '你最拿手的一道菜是什么？', category: '轻松日常', emoji: '🍳' },
+                { text: '最近有没有什么让你笑到停不下来的事？', category: '轻松日常', emoji: '😂' },
+                { text: '你心目中完美的周末是什么样的？', category: '轻松日常', emoji: '🌞' },
+                { text: '有没有什么小习惯是你一直坚持的？', category: '轻松日常', emoji: '🔄' },
+                { text: '你最近买过最满意的东西是什么？', category: '轻松日常', emoji: '🛍️' },
+                { text: '如果动物会说话，你觉得哪种动物最话痨？', category: '脑洞大开', emoji: '🐒' },
+                { text: '假如你能和任何一位历史人物吃顿饭，你会选谁？', category: '脑洞大开', emoji: '🤴' },
+                { text: '如果你有一个超能力但只能用一次，你会选什么？', category: '脑洞大开', emoji: '⚡' },
+                { text: '你觉得100年后的世界会是什么样子？', category: '脑洞大开', emoji: '🚀' },
+                { text: '如果可以给全世界的人定一条新规则，你会定什么？', category: '脑洞大开', emoji: '📜' },
+                { text: '你觉得自己前世是做什么的？', category: '脑洞大开', emoji: '🔮' },
+                { text: '如果地球明天就要毁灭，但你可以带三个人上飞船，你会带谁？', category: '脑洞大开', emoji: '🛸' },
+                { text: '假如你能进入任何一部电影的剧情里生活，你选哪部？', category: '脑洞大开', emoji: '🎥' },
+                { text: '你觉得外星人如果来地球，第一个学会的中文词会是什么？', category: '脑洞大开', emoji: '👽' },
+                { text: '如果你变成一种天气，你觉得自己会是什么天气？', category: '脑洞大开', emoji: '🌩️' },
+                { text: '你觉得什么样的人可以被称为好朋友？', category: '深度走心', emoji: '❤️' },
+                { text: '最近有没有什么事情让你感到很焦虑？', category: '深度走心', emoji: '😰' },
+                { text: '你人生中做过最勇敢的一个决定是什么？', category: '深度走心', emoji: '🦁' },
+                { text: '如果可以对十年前的自己说一句话，你会说什么？', category: '深度走心', emoji: '💌' },
+                { text: '你觉得成功的定义是什么？', category: '深度走心', emoji: '🏆' },
+                { text: '有没有一个人，对你的人生产生了很大的影响？', category: '深度走心', emoji: '🌟' },
+                { text: '你最害怕失去的东西是什么？', category: '深度走心', emoji: '💧' },
+                { text: '你觉得爱一个人和喜欢一个人，最大的区别是什么？', category: '深度走心', emoji: '💕' },
+                { text: '如果可以重新选择，你会改变人生中的哪个选择？', category: '深度走心', emoji: '🔄' },
+                { text: '你觉得幸福是一种能力还是一种运气？', category: '深度走心', emoji: '🍀' },
+                { text: '夏天没空调 vs 冬天没暖气，你选哪个？', category: '趣味二选一', emoji: '⚖️' },
+                { text: '只能吃甜食过一年 vs 只能吃咸食过一年？', category: '趣味二选一', emoji: '🍰' },
+                { text: '永远不能说谎 vs 永远只能说实话？', category: '趣味二选一', emoji: '🤥' },
+                { text: '失去味觉 vs 失去嗅觉？', category: '趣味二选一', emoji: '👃' },
+                { text: '穿越到古代 vs 穿越到未来？', category: '趣味二选一', emoji: '⏳' },
+                { text: '会飞但飞得很慢 vs 会隐身但每天只能隐身10分钟？', category: '趣味二选一', emoji: '🦸' },
+                { text: '住在大城市的小房子 vs 住在小城市的大房子？', category: '趣味二选一', emoji: '🏠' },
+                { text: '一年不刷手机 vs 一年不吃美食？', category: '趣味二选一', emoji: '📵' },
+                { text: '你童年最美好的一个记忆是什么？', category: '回忆往事', emoji: '📸' },
+                { text: '你上学时最喜欢哪门课？最讨厌哪门？', category: '回忆往事', emoji: '📚' },
+                { text: '说一件你小时候干过的傻事', category: '回忆往事', emoji: '🤪' },
+                { text: '你的第一个网名是什么？', category: '回忆往事', emoji: '💻' },
+                { text: '有没有一个地方，让你一想起就觉得很温暖？', category: '回忆往事', emoji: '🏡' },
+                { text: '你小时候的梦想职业是什么？现在变了吗？', category: '回忆往事', emoji: '👨‍🚀' },
+                { text: '你第一次自己赚到钱是什么时候？怎么赚的？', category: '回忆往事', emoji: '💵' },
+                { text: '有没有一首歌让你一听就回到某个特定的时刻？', category: '回忆往事', emoji: '🎶' }
+            ];
+
+            const topicCard = document.getElementById('topicCard');
+            const topicEmoji = document.getElementById('topicEmoji');
+            const topicText = document.getElementById('topicText');
+            const topicTag = document.getElementById('topicTag');
+            const btnDraw = document.getElementById('btnDraw');
+            const btnCopy = document.getElementById('btnCopy');
+            const historyList = document.getElementById('historyList');
+            const categoryFilters = document.getElementById('categoryFilters');
+            const drawCountEl = document.getElementById('drawCount');
+            const totalTopicsEl = document.getElementById('totalTopics');
+            const toast = document.getElementById('toast');
+            const particlesContainer = document.getElementById('particlesContainer');
+
+            let currentTopic = null;
+            let isRolling = false;
+            let selectedCategory = 'all';
+            let history = [];
+            let drawCountToday = 0;
+            const MAX_HISTORY = 15;
+const HISTORY_KEY = 'topic_blindbox_history';
+const COUNT_KEY = 'topic_blindbox_count';
+const DATE_KEY = 'topic_blindbox_date';
+
+function init() {
+    totalTopicsEl.textContent = topics.length;
+    loadFromStorage();
+    updateHistoryUI();
+    updateDrawCountUI();
+    bindEvents();
+}
+
+function loadFromStorage() {
+    try {
+        const savedHistory = localStorage.getItem(HISTORY_KEY);
+        if (savedHistory) history = JSON.parse(savedHistory);
+        const savedDate = localStorage.getItem(DATE_KEY);
+        const today = new Date().toDateString();
+        if (savedDate === today) {
+            const savedCount = localStorage.getItem(COUNT_KEY);
+            drawCountToday = savedCount ? parseInt(savedCount, 10) : 0;
+        } else {
+            drawCountToday = 0;
+            localStorage.setItem(DATE_KEY, today);
+            localStorage.setItem(COUNT_KEY, '0');
+        }
+    } catch (e) {
+        history = [];
+        drawCountToday = 0;
+    }
+}
+
+function saveToStorage() {
+    try {
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        localStorage.setItem(COUNT_KEY, drawCountToday.toString());
+        localStorage.setItem(DATE_KEY, new Date().toDateString());
+    } catch (e) {}
+}
+
+function bindEvents() {
+    btnDraw.addEventListener('click', handleDraw);
+    btnCopy.addEventListener('click', handleCopy);
+    categoryFilters.addEventListener('click', handleCategoryFilter);
+    historyList.addEventListener('click', handleHistoryClick);
+    document.addEventListener('keydown', function(e) {
+        if ((e.key === ' ' || e.code === 'Space') && document.activeElement === document.body) {
+            e.preventDefault();
+            handleDraw();
+        }
+    });
+}function handleCategoryFilter(e) {
+    const chip = e.target.closest('.filter-chip');
+    if (!chip) return;
+    categoryFilters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    selectedCategory = chip.dataset.category;
+}
+
+function handleDraw() {
+    if (isRolling) return;
+    isRolling = true;
+    btnDraw.disabled = true;
+    btnDraw.textContent = '🎰 抽取中...';
+    btnCopy.style.display = 'none';
+    topicTag.classList.remove('visible');
+    topicCard.classList.remove('result');
+    topicCard.classList.add('rolling');
+
+    var pool = selectedCategory === 'all' ? topics : topics.filter(t => t.category === selectedCategory);
+    if (pool.length === 0) pool = topics;
+
+    var recentTexts = {};
+    history.slice(0, 5).forEach(h => recentTexts[h.text] = true);
+    var filteredPool = pool.filter(t => !recentTexts[t.text]);
+    if (filteredPool.length < 3) filteredPool = pool;
+
+    var finalTopic = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+
+    var rollDuration = 1400;
+    var startTime = performance.now();
+    var lastSwitchTime = startTime;
+    var minInterval = 40;
+    var maxInterval = 350;
+    var displayTopic = pool[Math.floor(Math.random() * pool.length)];
+
+    updateCardDisplay(displayTopic, true);
+
+    function rollStep(timestamp) {
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / rollDuration, 1);
+        var easeOutProgress = 1 - Math.pow(1 - progress, 3);
+        var currentInterval = minInterval + (maxInterval - minInterval) * easeOutProgress;
+
+        if (timestamp - lastSwitchTime >= currentInterval && progress < 0.92) {
+            var nextTopic;
+            do {
+                nextTopic = pool[Math.floor(Math.random() * pool.length)];
+            } while (nextTopic.text === displayTopic.text && pool.length > 1);
+            displayTopic = nextTopic;
+            updateCardDisplay(displayTopic, true);
+            lastSwitchTime = timestamp;
+        }
+
+        if (progress < 1) {
+            requestAnimationFrame(rollStep);
+        } else {
+            updateCardDisplay(finalTopic, false);
+            finishDraw(finalTopic);
+        }
+    }
+
+    requestAnimationFrame(rollStep);
+}
+
+function updateCardDisplay(topic, isRollingPhase) {
+    topicEmoji.textContent = topic.emoji;
+    topicText.textContent = topic.text;
+    topicText.style.fontWeight = isRollingPhase ? '500' : '700';
+    topicText.style.color = isRollingPhase ? '#636e72' : '#2d3436';
+}
+
+function finishDraw(topic) {
+    currentTopic = topic;
+    topicCard.classList.remove('rolling');
+    topicCard.classList.add('result');
+    topicText.style.fontWeight = '700';
+    topicText.style.color = '#2d3436';
+    topicEmoji.textContent = topic.emoji;
+    topicText.textContent = topic.text;
+    topicTag.textContent = topic.category;
+    topicTag.classList.add('visible');
+
+    btnDraw.disabled = false;
+    btnDraw.textContent = '🎯 再来一个';
+    btnCopy.style.display = 'inline-flex';
+
+    addToHistory(topic);
+    drawCountToday++;
+    updateDrawCountUI();
+    saveToStorage();
+    spawnParticles();
+
+    setTimeout(() => {
+        isRolling = false;
+        topicCard.classList.remove('result');
+    }, 600);
+}
+     function addToHistory(topic) {
+    history = history.filter(h => h.text !== topic.text);
+    history.unshift({ text: topic.text, emoji: topic.emoji, category: topic.category, time: Date.now() });
+    if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
+    updateHistoryUI();
+}
+
+function updateHistoryUI() {
+    if (history.length === 0) {
+        historyList.innerHTML = '<span class="no-history">还没有抽过话题哦~</span>';
+    } else {
+        historyList.innerHTML = history.map((h, i) =>
+            '<span class="history-item" data-index="' + i + '" title="' + h.text + '">' +
+            '<span style="margin-right:4px;">' + h.emoji + '</span>' + h.text + '</span>'
+        ).join('');
+    }
+}
+
+function handleHistoryClick(e) {
+    const item = e.target.closest('.history-item');
+    if (!item) return;
+    const index = parseInt(item.dataset.index, 10);
+    if (index >= 0 && index < history.length) {
+        const h = history[index];
+        currentTopic = { text: h.text, emoji: h.emoji, category: h.category };
+        topicEmoji.textContent = h.emoji;
+        topicText.textContent = h.text;
+        topicText.style.fontWeight = '700';
+        topicText.style.color = '#2d3436';
+        topicTag.textContent = h.category;
+        topicTag.classList.add('visible');
+        btnCopy.style.display = 'inline-flex';
+        btnDraw.textContent = '🎯 再来一个';
+        topicCard.classList.add('result');
+        setTimeout(() => topicCard.classList.remove('result'), 500);
+        item.style.background = '#fff8f0';
+        setTimeout(() => item.style.background = '', 400);
+    }
+}
+
+function updateDrawCountUI() {
+    drawCountEl.textContent = drawCountToday;
+}
+
+function handleCopy() {
+    if (!currentTopic) return;
+    const textToCopy = '💬 话题盲盒：' + currentTopic.emoji + ' ' + currentTopic.text + '\n—— 和朋友聊起来吧！';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(() => showToast('✅ 话题已复制，发给朋友吧！'))
+        .catch(() => fallbackCopy(textToCopy));
+    } else {
+        fallbackCopy(textToCopy);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.pointerEvents = 'none';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        showToast('✅ 话题已复制，发给朋友吧！');
+    } catch (e) {
+        showToast('⚠️ 复制失败，请长按手动复制');
+    }
+    document.body.removeChild(textarea);
+}
+
+let toastTimer;
+function showToast(message) {
+    clearTimeout(toastTimer);
+    toast.textContent = message;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function spawnParticles() {
+    const cardRect = topicCard.getBoundingClientRect();
+    const centerX = cardRect.left + cardRect.width / 2;
+    const centerY = cardRect.top + cardRect.height / 2;
+    const colors = ['#ff6b6b', '#ffa94d', '#ffd43b', '#51cf66', '#748ffc', '#f06595', '#20c997', '#ff8787'];
+    const fragment = document.createDocumentFragment();
+    const particleCount = 16;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.4;
+        const distance = 45 + Math.random() * 85;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
+        const size = 4 + Math.random() * 8;
+        particle.style.cssText =
+            'left:' + centerX + 'px;' +
+            'top:' + centerY + 'px;' +
+            'width:' + size + 'px;' +
+            'height:' + size + 'px;' +
+            'background:' + colors[Math.floor(Math.random() * colors.length)] + ';' +
+            '--dx:' + dx + 'px;' +
+            '--dy:' + dy + 'px;' +
+            'animation-duration:' + (0.7 + Math.random() * 0.8) + 's;' +
+            'animation-delay:' + (Math.random() * 0.15) + 's;';
+        fragment.appendChild(particle);
+    }
+
+    particlesContainer.appendChild(fragment);
+    setTimeout(() => {
+        while (particlesContainer.children.length > 0) {
+            particlesContainer.removeChild(particlesContainer.firstChild);
+        }
+    }, 1800);
+}
+
+init();
+})();
+</script>
+</body>
+</html> 
